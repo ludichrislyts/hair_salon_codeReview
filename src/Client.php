@@ -12,24 +12,14 @@
             $this->id = $id;
         }
 
-        function getStylistId()
-        {
-            return $this->stylist_id;
-        }
-
-        function getName()
-        {
-            return $this->name;
-        }
-
         function getId()
         {
             return $this->id;
         }
 
-        function setName($new_name)
+        function getStylistId()
         {
-            $this->name = $new_name;
+            return $this->stylist_id;
         }
 
         function setStylistId($new_stylist_id)
@@ -37,10 +27,52 @@
             $this->stylist_id = $new_stylist_id;
         }
 
+        function getName()
+        {
+            return $this->name;
+        }
+
+
+        function setName($new_name)
+        {
+            $this->name = $new_name;
+        }
+
         function save()
         {
             $GLOBALS['DB']->exec("INSERT INTO clients (stylist_id, name) VALUES ({$this->getstylistId()}, '{$this->getName()}');");
             $this->id = $GLOBALS['DB']->lastInsertId();
+        }
+
+        function delete()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM clients WHERE id = {$this->getId()};");
+        }
+
+        static function findByClientId($search_id)
+        {
+            $found_client = null;
+            $clients = Client::getAll();
+            foreach ($clients as $client){
+                $client_id = $client->getId();
+                if ($client_id == $search_id){
+                    $found_client = $client;
+                }
+            }
+            return $found_client;
+        }
+
+        static function findByStylistId($search_id)
+        {
+            $found_clients = array();
+            $clients = client::getAll();
+            foreach ($clients as $client){
+                $stylist_id = $client->getStylistId();
+                if ($stylist_id == $search_id){
+                    array_push($found_clients, $client);
+                }
+            }
+            return $found_clients;
         }
 
         static function getAll()

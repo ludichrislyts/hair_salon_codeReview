@@ -17,7 +17,7 @@
             Stylist::deleteAll();
         }
 
-        function test_save()
+        function test_Save()
         {
             //Arrange
             $name = "Chris";
@@ -30,7 +30,7 @@
             $this->assertEquals($test_stylist, $result[0]);
         }
 
-        function test_getAll()
+        function test_GetAll()
         {
             //Arrange
             $name1 = "Chris";
@@ -45,7 +45,7 @@
             $this->assertEquals([$test_stylist1, $test_stylist2], $result);
         }
 
-        function test_deleteAll()
+        function test_DeleteAll()
         {
             //Arrange
             $name1 = "Chris";
@@ -62,7 +62,7 @@
             $this->assertEquals([], $result);
         }
 
-        function test_getId()
+        function test_GetId()
         {
             //Arrange
             $name = "Chris";
@@ -74,7 +74,7 @@
             $this->assertEquals(true, is_numeric($result));
         }
 
-        function test_find()
+        function test_Find()
         {
             //Arrange
             $name1 = "Chris";
@@ -88,6 +88,21 @@
             //Assert
             $this->assertEquals($test_stylist1, $result);
         }
+
+        function test_Update()
+        {
+            //Arrange
+            $name = "Chris";
+            $test_stylist = new stylist($name);
+            $test_stylist->save();
+            $new_name = "Chris Lytsell";
+            //Act
+            $test_stylist->update($new_name);
+            $result = $test_stylist->getname();
+            //Assert
+            $this->assertEquals($new_name, $result);
+        }
+
 
 
 

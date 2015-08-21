@@ -30,7 +30,7 @@
     // route = this page displays from the home page after a user clicks on a stylist name
     $app->get("/stylist/{id}", function($id) use ($app) {
         $stylist = Stylist::find($id);
-        return $app['twig']->render('stylist{id}.html.twig', array('clients' => Client::getAll()));
+        return $app['twig']->render('clients.html.twig', array('stylist' => $stylist));
     });
 
     // STYLISTS PAGE - CONFIRMS ADDING OF STYLIST AND PROVIDES HOME PAGE LINK
@@ -38,7 +38,32 @@
     $app->post('/stylist_added', function() use ($app){
         $stylist = new Stylist($_POST['name']);
         $stylist->save();
-        return $app['twig']->render('stylist.html.twig', array('stylist' => Stylist::find($stylist->getId())));
+        return $app['twig']->render('stylist_added.html.twig', array('stylist' => Stylist::find($stylist->getId())));
+    });
+
+    // UPDATE STYLIST PAGE - DISPLAYS LIST OF STYLISTS (MAIN PAGE) WITH UPDATED INFO
+    // route = page displays after user clicks "edit stylist" from that stylist's page
+    $app->get('/stylist/{id}/update', function($id) use ($app){
+        $stylist = stylist::find($id);
+        // $name = $_POST['name'];
+        // $stylist->update($name);
+        return $app['twig']->render('edit_stylist.html.twig', array('stylist' => $stylist));
+    });
+
+    $app->patch("/stylist/{id}", function($id) use ($app){
+        $name = $_POST['name'];
+        $stylist = Stylist::find($id);
+        $stylist->update($name);
+        return $app['twig']->render('clients.html.twig', array('stylist' => $stylist));
+    });
+
+    // DELETE STYLIST PAGE - CONFIRMS DELETE OF STYLIST AND LINK TO HOME PAGE
+    $app->delete('/stylist/{id}/delete', function($id) use ($app) {
+        $stylist = stylist::find($id);
+        $name = $stylist->getName();
+        $stylist->deleteOne();
+        return $app['twig']->render('delete_stylist.html.twig', array('stylist' => $name));
+        //, array('stylists' => stylist::getAll()));
     });
 
     return $app;

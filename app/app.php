@@ -58,11 +58,10 @@
     });
 
     // DELETE STYLIST PAGE - CONFIRMS DELETE OF STYLIST AND LINK TO HOME PAGE
-    $app->delete('/stylist/{id}/delete', function($id) use ($app) {
+    $app->delete('/stylist/{id}', function($id) use ($app) {
         $stylist = stylist::find($id);
-        $name = $stylist->getName();
-        $stylist->deleteOne();
-        return $app['twig']->render('delete_stylist.html.twig', array('stylist' => $name));
+        $stylist->deleteOne($id);
+        return $app['twig']->render('index.html.twig', array('stylists' => Stylist::getAll()));
         //, array('stylists' => stylist::getAll()));
     });
 

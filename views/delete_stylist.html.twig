@@ -3,7 +3,13 @@
         <title>Confirm Delete</title>
     </head>
     <body>
-        <h2>Stylist {{ stylist.getName }} has been fired!</h2>
-        <a href="/">See your remaining loyal employees</a>
+        <h2>Are you sure you want to fire {{ stylist.getName }}?</h2>
+        </form>
+            <form action="/stylist/{{ stylist.getId }}" method="post">
+            <input name="_method" type="hidden" value="delete">
+
+            <button type="submit">Can 'em!!'</button>
+        </form>
+        <a href="/">No! Take me to my home page</a>
     </body>
 </html>

@@ -1,0 +1,37 @@
+copy restaurants to modify
+
+<html>
+    <head>
+        <title>Restaurant List</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="/../main.css">
+    </head>
+    <body>
+        <div class="container">
+            <h2>Restaurants</h2>
+            {% if restaurants is not empty %}
+                <p>Here are all your restaurants:</p>
+                <ul class="list-group">
+                    {% for restaurant in restaurants %}
+                        <li class="list-group-item">{{ restaurant.getRestaurantName }} <span class="badge tc"><a href="/restaurants/{{ restaurant.getId }}/edit">Edit</a></span>
+                    {% endfor %}
+                </ul>
+                {% endif %}
+                <div>
+                    <form action='/restaurants' method='post'>
+                        <label for='restaurant_name'>Restaurant Name</label>
+                        <input id='restaurant_name' name='restaurant_name' type='text'>
+
+                        <button type='submit'>Add Restaurant</button>
+                    </form>
+                </div>
+                <div>
+                    <form action='/delete_restaurants' method='post'>
+                        <button type='submit'>Clear</button>
+                    </form>
+                </div>
+
+            <p><a href='/'>Home</a></p>
+        </div>
+    </body>
+</html>

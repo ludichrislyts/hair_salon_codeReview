@@ -103,6 +103,22 @@
             $this->assertEquals($new_name, $result);
         }
 
+        function test_deleteOne()
+        {
+           //Arrange
+           $name1 = "burgers";
+           $test_stylist1 = new stylist($name1);
+           $test_stylist1->save();
+           $name2 = "seafood";
+           $test_stylist2 = new stylist($name2);
+           $test_stylist2->save();
+           //Act
+           $test_stylist1->deleteOne();
+           $result = stylist::getAll();
+           //Assert
+           $this->assertEquals([$test_stylist2], $result);
+        }
+
 
 
 

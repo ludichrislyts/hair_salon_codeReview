@@ -38,6 +38,11 @@
             $this->setname($new_name);
         }
 
+        function deleteOne()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM stylists WHERE id = {$this->getId()};");
+        }
+
         static function find($search_id)
         {
             $found_stylist = null;

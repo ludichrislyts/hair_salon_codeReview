@@ -1,0 +1,19 @@
+<h2>Update {{ client.getName }}'s info</h2>
+
+<form action="/client/{{ client.getId }}" method="post">
+  <input name="_method" type="hidden" value="patch">
+
+  <label for="name">Rename your client:</label>
+  <input id="name" name="name" type="text">
+
+  <button name="submit">Update</button>
+
+  <h2>Maybe {{ client.getName }} doesn't come in anymore?</h2>
+  </form>
+      <form action="/client/{{ client.getId }}" method="post">
+      <input name="_method" type="hidden" value="delete">
+
+      <button type="submit">Yep, they're history</button>
+      <a href="/">Home</a>
+  </form>
+</form>

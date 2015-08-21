@@ -41,10 +41,27 @@
             $test_stylist2->save();
             //Act
             $result = Stylist::getAll();
-            var_dump($result);
             //Assert
             $this->assertEquals([$test_stylist1, $test_stylist2], $result);
         }
+
+        function test_deleteAll()
+        {
+            //Arrange
+            $name1 = "Chris";
+            $name2 = "Mary";
+            $test_stylist1 = new stylist($name1);
+            $test_stylist1->save();
+            $test_stylist2 = new stylist($name2);
+            $test_stylist2->save();
+            //Act
+            stylist::deleteAll();
+            //Assert
+            $result = stylist::getAll();
+            var_dump($result);
+            $this->assertEquals([], $result);
+        }
+
 
 
     }

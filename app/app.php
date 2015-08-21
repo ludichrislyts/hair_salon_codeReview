@@ -78,10 +78,21 @@
 
     $app->get('/client/{id}/update', function($id) use ($app){
         $client = Client::findByClientId($id);
-        var_dump($client);
         // $name = $_POST['name'];
         // $stylist->update($name);
         return $app['twig']->render('edit_client.html.twig', array('client' => $client));
+    });
+
+    // UPDATE TO CLIENT
+    $app->patch("/client/{id}", function($id) use ($app){
+        $name = $_POST['name'];
+        var_dump($name);
+        $client = Client::findByClientId($id);
+        $client->setName($name);
+        var_dump($client);
+        $stylist_id = $client->getStylistId();
+        $stylist = Stylist::find($stylist_id);
+        return $app['twig']->render('clients.html.twig', array('stylist' => $stylist, 'clients' => Client::findByStylistId($stylist_id)));
     });
 
     return $app;

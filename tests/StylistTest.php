@@ -12,23 +12,23 @@
 
     class StylistTest extends PHPUnit_Framework_TestCase
     {
-        // protected function tearDown()
-        // {
-        //     Stylist::deleteAll();
-        // }
+        protected function tearDown()
+        {
+            Stylist::deleteAll();
+        }
 
-        // function test_save()
-        // {
-        //     //Arrange
-        //     $name = "Chris";
-        //     $test_stylist = new Stylist($name);
-        //     //Act
-        //     $test_stylist->save();
-        //     //var_dump($test_stylist);
-        //     $result = Stylist::getAll();
-        //     //Assert
-        //     $this->assertEquals($test_stylist, $result[0]);
-        // }
+        function test_save()
+        {
+            //Arrange
+            $name = "Chris";
+            $test_stylist = new Stylist($name);
+            //Act
+            $test_stylist->save();
+            //var_dump($test_stylist);
+            $result = Stylist::getAll();
+            //Assert
+            $this->assertEquals($test_stylist, $result[0]);
+        }
 
         function test_getAll()
         {
@@ -60,6 +60,33 @@
             $result = stylist::getAll();
             var_dump($result);
             $this->assertEquals([], $result);
+        }
+
+        function test_getId()
+        {
+            //Arrange
+            $name = "Chris";
+            $test_stylist = new Stylist($name);
+            $test_stylist->save();
+            //Act
+            $result = $test_stylist->getId();
+            //Assert
+            $this->assertEquals(true, is_numeric($result));
+        }
+
+        function test_find()
+        {
+            //Arrange
+            $name1 = "Chris";
+            $test_stylist1 = new stylist($name1);
+            $test_stylist1->save();
+            $name2 = "Sarah";
+            $test_stylist2 = new stylist($name2);
+            $test_stylist2->save();
+            //Act
+            $result = stylist::find($test_stylist1->getId());
+            //Assert
+            $this->assertEquals($test_stylist1, $result);
         }
 
 

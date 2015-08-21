@@ -58,7 +58,6 @@
             stylist::deleteAll();
             //Assert
             $result = stylist::getAll();
-            var_dump($result);
             $this->assertEquals([], $result);
         }
 
@@ -72,6 +71,21 @@
             $result = $test_stylist->getId();
             //Assert
             $this->assertEquals(true, is_numeric($result));
+        }
+
+        function test_GetName()
+        {
+            //Arrange
+            $name = "Chris";
+            $test_stylist = new Stylist($name);
+            $test_stylist->save();
+
+            //Act
+            $result = $test_stylist->getName();
+            var_dump($result);
+
+            //Assert
+            $this->assertEquals("Chris", $result);
         }
 
         function test_Find()
@@ -106,10 +120,10 @@
         function test_deleteOne()
         {
            //Arrange
-           $name1 = "burgers";
+           $name1 = "Chris";
            $test_stylist1 = new stylist($name1);
            $test_stylist1->save();
-           $name2 = "seafood";
+           $name2 = "Sarah";
            $test_stylist2 = new stylist($name2);
            $test_stylist2->save();
            //Act

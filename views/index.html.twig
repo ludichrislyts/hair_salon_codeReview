@@ -1,0 +1,36 @@
+<html>
+    <head>
+        <title>The Butcher's Hair Salon</title>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" name="text/css" href="/../main.css">
+    </head>
+    <body>
+
+        <div class="container">
+            <h2>Welcome to Butcher's!</h2>
+            {% if stylists is not empty %}
+                <h3>Click on a stylist to view thier client list</h3>
+                <ul>
+                    {% for stylist in stylists %}
+                    <li><a href="/stylist/{{ stylist.getId }}">{{ stylist.getName }}</a></li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <h3>We have no stylists yet...come in and apply!</h3>
+                <a href="/">Home page</a>
+            {% endif %}
+            <div class="row">
+
+                <div class="col-xs-6" style="text-align:center;">
+                        <form action='/stylist_added' method='post'>
+                            <label for='name'>Stylist's name</label>
+                            <input id='name' name='name' name='text'>
+
+                            <button class="btn btn-default" style="padding-right:20px;padding-left:20px;" name='submit'>Add Stylist</button>
+                        </form>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

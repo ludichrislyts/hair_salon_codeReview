@@ -36,7 +36,11 @@
     // STYLISTS PAGE - CONFIRMS ADDING OF STYLIST AND PROVIDES HOME PAGE LINK
     // route = page displays from home page after user adds a stylist
     $app->post('/stylist_added', function() use ($app){
-        $stylist = new Stylist($_POST['name']);
+        $name = $_POST['name'];
+        if (strlen($name) < 1){
+            return $app['twig']->render('error.html.twig');
+        }
+        $stylist = new Stylist($name);
         $stylist->save();
         return $app['twig']->render('stylist_added.html.twig', array('stylist' => Stylist::find($stylist->getId())));
     });
@@ -61,7 +65,15 @@
     // DELETE STYLIST PAGE - CONFIRMS DELETE OF STYLIST AND LINK TO HOME PAGE
     $app->delete('/stylist/{id}', function($id) use ($app) {
         $stylist = stylist::find($id);
-        $stylist->deleteOne($id);
+        // check to make sure there is still a stylist
+        if ($stylist !== null){
+            // reset Client stylist_id's to null
+            $clients = Client::findByStylistId($id);
+            foreach ($clients as $client){
+                $client->setStylistId(null);
+            }
+            $stylist->deleteOne($id);
+        }
         return $app['twig']->render('index.html.twig', array('stylists' => Stylist::getAll()));
         //, array('stylists' => stylist::getAll()));
     });
@@ -86,13 +98,26 @@
     // UPDATE TO CLIENT
     $app->patch("/client/{id}", function($id) use ($app){
         $name = $_POST['name'];
-        var_dump($name);
         $client = Client::findByClientId($id);
         $client->setName($name);
-        var_dump($client);
+        $client->update($name);
         $stylist_id = $client->getStylistId();
         $stylist = Stylist::find($stylist_id);
         return $app['twig']->render('clients.html.twig', array('stylist' => $stylist, 'clients' => Client::findByStylistId($stylist_id)));
+    });
+    // DELETE CLIENT ROUTE
+    $app->delete('/client/{id}', function($id) use ($app) {
+        $client = Client::findByClientId($id);
+        // check to make sure there is still a client
+        if ($client !== null){
+            $stylist_id = $client->getStylistId();
+            $stylist = Stylist::find($stylist_id);
+            $client->delete($id);
+            return $app['twig']->render('clients.html.twig', array('stylist' => $stylist, 'clients' => Client::findByStylistId($stylist_id)));
+        }else{
+            return $app['twig']->render('no_client.html.twig');
+        }
+        //, array('stylists' => stylist::getAll()));
     });
 
     return $app;

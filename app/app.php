@@ -8,15 +8,14 @@
     $app['debug'] = true;
 
 
-    $server = 'mysql:host=localhost;dbname=hair_salon';
-    $username = 'root';
-    $password = 'root';
-    $DB = new PDO($server, $username, $password);
 
+    $server = 'mysql:host=127.0.0.1;dbname=hair_salon';
+    $username = 'root';
+    $password = '';
+    $DB = new PDO($server, $username, $password = null);
 
     $app->register(new Silex\Provider\TwigServiceProvider(), array(
-        'twig.path' => __DIR__.'/../views'
-    ));
+        'twig.path' => __DIR__.'/../views'));
 
     use Symfony\Component\HttpFoundation\Request;
     Request::enableHttpMethodParameterOverride();
@@ -38,7 +37,11 @@
     $app->post('/stylist_added', function() use ($app){
         $name = $_POST['name'];
         if (strlen($name) < 1){
-            return $app['twig']->render('error.html.twig');
+            // dummy stylist to send to error page
+            $stylist = null;
+            // *error page also loads from bad client name input and
+            // offers option to reload stylist page
+            return $app['twig']->render('error.html.twig', array('stylist' => $stylist));
         }
         $stylist = new Stylist($name);
         $stylist->save();
@@ -49,9 +52,14 @@
     // route = page displays after user clicks "edit stylist" from that stylist's page
     $app->get('/stylist/{id}/update', function($id) use ($app){
         $stylist = stylist::find($id);
-        // $name = $_POST['name'];
-        // $stylist->update($name);
-        return $app['twig']->render('edit_stylist.html.twig', array('stylist' => $stylist));
+        if ($stylist !== null){
+            $stylist = stylist::find($id);
+            // $name = $_POST['name'];
+            // $stylist->update($name);
+            return $app['twig']->render('edit_stylist.html.twig', array('stylist' => $stylist));
+        }else{
+            return $app['twig']->render('no_client.html.twig');
+        }
     });
 
     //page that renders after an update to stylist, displays that stylists clients
@@ -59,7 +67,7 @@
         $name = $_POST['name'];
         $stylist = Stylist::find($id);
         $stylist->update($name);
-        return $app['twig']->render('clients.html.twig', array('stylist' => $stylist, 'clients' => Client::getAll()));
+        return $app['twig']->render('clients.html.twig', array('stylist' => $stylist, 'clients' => Client::findByStylistId($id)));
     });
 
     // DELETE STYLIST PAGE - CONFIRMS DELETE OF STYLIST AND LINK TO HOME PAGE
@@ -67,11 +75,12 @@
         $stylist = stylist::find($id);
         // check to make sure there is still a stylist
         if ($stylist !== null){
-            // reset Client stylist_id's to null
-            $clients = Client::findByStylistId($id);
-            foreach ($clients as $client){
-                $client->setStylistId(null);
-            }
+            // reset Client stylist_id's to null ***
+            // $clients = Client::findByStylistId($id);
+            // foreach ($clients as $client){
+            //     $client->setStylistId(null);
+            // }
+            // deleteOne deletes clients attached to the stylist. Could change to reassign.
             $stylist->deleteOne($id);
         }
         return $app['twig']->render('index.html.twig', array('stylists' => Stylist::getAll()));
@@ -81,6 +90,11 @@
     // ADDED CLIENT TO STYLIST RESULT
     $app->post('/stylist_clients', function() use ($app){
         $stylist_id = $_POST['stylist_id'];
+        $stylist = Stylist::find($stylist_id);
+        // check for valid entry, send stylist info to error page to reload stylist page
+        if (strlen($_POST['name']) < 1){
+            return $app['twig']->render('error.html.twig', array('stylist' => $stylist));
+        }
         $client = new Client($_POST['name'], $stylist_id);
         $client->save();
         //var_dump($client);

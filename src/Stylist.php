@@ -38,8 +38,10 @@
             $this->setname($new_name);
         }
 
-        function deleteOne()
+        function deleteOne() //could add new_stylist_id parameter that would reassign client to new stylist
         {
+            //delete clients attached to this stylist
+            $GLOBALS['DB']->exec("DELETE FROM clients WHERE stylist_id = {$this->getId()}");
             $GLOBALS['DB']->exec("DELETE FROM stylists WHERE id = {$this->getId()};");
         }
 

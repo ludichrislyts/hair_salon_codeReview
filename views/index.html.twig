@@ -1,12 +1,12 @@
 <html>
     <head>
         <title>The Butcher's Hair Salon</title>
-
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
-        <link rel="stylesheet" name="text/css" href="/../main.css">
+        <link href="css/custom.css" rel='stylesheet' type="text/css">
+        <link href="../../css/custom.css" rel='stylesheet' type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
     </head>
     <body>
-
         <div class="container">
             <h2>Welcome to Butcher's!</h2>
             {% if stylists is not empty %}
@@ -21,15 +21,12 @@
 
             {% endif %}
             <div class="row">
+                <form action='/stylist_added' method='post'>
+                    <label for='name'>Stylist's name</label>
+                    <input id='name' name='name' name='text'>
 
-                <div class="col-xs-6" style="text-align:center;">
-                        <form action='/stylist_added' method='post'>
-                            <label for='name'>Stylist's name</label>
-                            <input id='name' name='name' name='text'>
-
-                            <button class="btn btn-default" style="padding-right:20px;padding-left:20px;" name='submit'>Add Stylist</button>
-                        </form>
-                </div>
+                    <button class="btn btn-default" style="padding-right:20px;padding-left:20px;" name='submit'>Add Stylist</button>
+                </form>
             </div>
         </div>
     </body>

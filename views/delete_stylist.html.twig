@@ -1,15 +1,20 @@
 <html>
     <head>
+        <link href="css/custom.css" rel='stylesheet' type="text/css">
+        <link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+        <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
         <title>Confirm Delete</title>
     </head>
     <body>
-        <h2>Are you sure you want to fire {{ stylist.getName }}?</h2>
-        </form>
-            <form action="/stylist/{{ stylist.getId }}" method="post">
-            <input name="_method" type="hidden" value="delete">
+        <div class="container">
+            <h2>Are you sure you want to fire {{ stylist.getName }}?</h2>
+            </form>
+                <form action="/stylist/{{ stylist.getId }}" method="post">
+                <input name="_method" type="hidden" value="delete">
 
-            <button type="submit">Can 'em!!'</button>
-        </form>
-        <a href="/">No! Take me to my home page</a>
+                <button type="submit">Can 'em!!'</button>
+            </form>
+            <a href="/">No! Take me to my home page</a>
+        </div>
     </body>
 </html>

@@ -10,7 +10,7 @@ This app will let a user enter a list of stylists and the clients they serve.  S
 
 ## Setup
 
-* clone git repository: https://github.com/fignewtonfood/wk2_code_review.git
+* clone git repository: https://github.com/ludichrislyts/hair_salon_codeReview.git
 * import database using phpMyAdmin
 * run composer install in project folder in terminal
 * start local php server in project subfolder labeled 'web'

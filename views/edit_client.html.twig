@@ -12,12 +12,12 @@
             <form action="/client/{{ client.getId }}" method="post">
                 <input name="_method" type="hidden" value="patch">
 
-                <label for="name">Rename your client:</label>
+                <label for="name">Rename your client:  </label>
                 <input id="name" name="name" type="text">
 
                 <button name="submit">Update</button>
 
-                <h2>Maybe {{ client.getName }} doesn't come in anymore?</h2>
+                <h2>{{ client.getName }} doesn't come in anymore?</h2>
             </form>
             <form action="/client/{{ client.getId }}" method="post">
                 <input name="_method" type="hidden" value="delete">

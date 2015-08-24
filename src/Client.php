@@ -11,7 +11,14 @@
             $this->stylist_id = $stylist_id;
             $this->id = $id;
         }
-
+/**
+ *
+ * Convert an object to an array
+ *
+ * @param    object  $object The object to convert
+ * @return      array
+ *
+ */
         function getId()
         {
             return $this->id;

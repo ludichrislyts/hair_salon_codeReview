@@ -1,18 +1,19 @@
 <html>
     <head>
-        <link href="web/css/custom.css" rel='stylesheet' type="text/css">
+        <link href="css/custom.css" rel='stylesheet' type="text/css">
+        <link href="../css/custom.css" rel='stylesheet' type="text/css">
         <link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
         <link rel='stylesheet' href='https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css'>
         <title>ERROR</title>
     </head>
     <body class="withcover" background-image="../img/background.jpg">
         <div class="container">
-            <h3>Nothing Entered!</h3>
+            <h2>Nothing Entered!</h2>
             {% if stylist %}
-                <a href="/stylist/{{ stylist.getId }}">Back to {{ stylist.getName }}'s page'</a>
+                <h3><a href="/stylist/{{ stylist.getId }}">Back to {{ stylist.getName }}'s page'</a></h3>
             {% endif %}
             </br>
-            <a href="/">I was just kidding anyway, take me home</a>
+            <h3><a href="/">I was just kidding anyway, take me home</a></h3>
         </div>
     </body>
 </html>

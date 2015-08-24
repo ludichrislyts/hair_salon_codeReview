@@ -7,28 +7,30 @@
     </head>
     <body class="withcover">
         <div class="container">
-            <h2>{{ stylist.getName }}'s Client list</h2>
-                {% if clients is not empty %}
-                    <h2>Click on a client to edit/delete</h2>
-                    <ul>
-                        {% for client in clients %}
-                        <li><a href="/client/{{ client.getId }}/update">{{ client.getName }}</a></li>
-                        {% endfor %}
-                    </ul>
-                {% else %}
-                    <h3>No clients</h3>
-                {% endif %}
-
-            <h3>Give {{ stylist.getName }} more work! Add a client</h3>
-            <form action="/stylist_clients" method="post">
-                    <input type="hidden" name="stylist_id" id="stylist_id" value="{{ stylist.getId() }}">
-
-                    <label for='name'>Client Name</label>
-                    <input id='name' name='name' type='text'>
-
-                    <button type='submit'>Add client</button>
-                </form>
-            <p><a href="/stylist/{{ stylist.getId }}/update">Edit this stylist</a></p>
+            {% if stylist is not null %}
+                <h2>{{ stylist.getName }}'s Client list</h2>
+                    {% if clients is not empty %}
+                        <h2>Click on a client to edit/delete</h2>
+                        <ul>
+                            {% for client in clients %}
+                            <li><a href="/client/{{ client.getId }}/update">{{ client.getName }}</a></li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <h3>No clients</h3>
+                    {% endif %}
+    
+                <h3>Give {{ stylist.getName }} more work! Add a client</h3>
+                <form action="/stylist_clients" method="post">
+                        <input type="hidden" name="stylist_id" id="stylist_id" value="{{ stylist.getId() }}">
+    
+                        <label for='name'>Client Name</label>
+                        <input id='name' name='name' type='text'>
+    
+                        <button type='submit'>Add client</button>
+                    </form>
+                <p><a href="/stylist/{{ stylist.getId }}/update">Edit this stylist</a></p>
+            {% endif %}
             <p><a href='/'>Home</a></p>
         </div>
     </body>
